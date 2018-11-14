@@ -12,8 +12,8 @@ buildscript {
         //RealM数据库插件
         classpath "io.realm:realm-gradle-plugin:4.3.2"
         //上传maven插件
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath  'com.github.dcendents:android-maven-gradle-plugin:2.1'
 //        //上传maven插件
 //        classpath 'com.novoda:bintray-release:0.9'
     }
@@ -24,26 +24,16 @@ allprojects {
         google()
         jcenter()
     }
-/*    tasks.withType(Javadoc) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-        options.addStringOption('encoding', 'UTF-8')
-    }*/
 }
-/*//统一声明配置
-ext {
-    userOrg = 'stephenyoung'
-    groupId = 'com.stephen.framework'
-    uploadName = 'mvpframework'
-    publishVersion = '1.0.1'
-    desc = 'mvpframework for Android is a fast develop framework, it can let developer\'s logic clear ,make code is easy to read.'
-    website = 'https://github.com/StephenYoungq/mvpframework'
-    licences = ['Apache-2.0']
-}*/
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 //全局编码设置
 tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+    options{
+        encoding = 'UTF-8'
+        charSet 'UTF-8'
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
 }

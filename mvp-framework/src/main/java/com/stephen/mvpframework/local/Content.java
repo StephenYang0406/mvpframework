@@ -47,7 +47,7 @@ public class Content {
 
     public static final class ConnectionTime {
         //通用超时时间
-        public static final int COMMON_TIME_OUT = 10 * 1000;
+        public static final long COMMON_TIME_OUT = 10 * 1000;
 
     }
 

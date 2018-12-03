@@ -73,7 +73,7 @@ public abstract class WebViewActivity extends AbstractActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 //DialogUtil.closeBlockingProgressDialog();
-                ToastUtil.showErrorToast("网络错误：" + error.getErrorCode() + "," + error.getDescription());
+                ToastUtil.INSTANCE.showErrorToast("网络错误：" + error.getErrorCode() + "," + error.getDescription());
             }
 
             @Override
@@ -86,7 +86,7 @@ public abstract class WebViewActivity extends AbstractActivity {
                 return super.shouldOverrideUrlLoading(view, request);
             }
         });
-        LogUtil.testInfo("loadUrl--->" + url);
+        LogUtil.INSTANCE.testInfo("loadUrl--->" + url);
         //启动WebView
         mWebView.loadUrl(url);
     }

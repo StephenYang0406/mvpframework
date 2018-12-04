@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
-class RetrofitRxBuilder {
+class RxRetrofitBuilder {
     companion object {
         private lateinit var retrofit: Retrofit
     }
@@ -38,7 +38,7 @@ class RetrofitRxBuilder {
     /**
      * 统一URL
      */
-    fun baseUrl(baseUrl: String): RetrofitRxBuilder {
+    fun baseUrl(baseUrl: String): RxRetrofitBuilder {
         this.baseUrl = baseUrl
         return this
     }
@@ -46,7 +46,7 @@ class RetrofitRxBuilder {
     /**
      * 读取时间,单位毫秒 MILLISECONDS
      */
-    fun readTimeout(readTimeout: Long): RetrofitRxBuilder {
+    fun readTimeout(readTimeout: Long): RxRetrofitBuilder {
 
         return this
     }
@@ -54,7 +54,7 @@ class RetrofitRxBuilder {
     /**
      * 写入时间,单位毫秒 MILLISECONDS
      */
-    fun writeTimeout(writeTimeout: Long): RetrofitRxBuilder {
+    fun writeTimeout(writeTimeout: Long): RxRetrofitBuilder {
         this.writeTimeout = writeTimeout
         return this
     }
@@ -62,7 +62,7 @@ class RetrofitRxBuilder {
     /**
      * 链接超时时间,单位毫秒 MILLISECONDS
      */
-    fun connectTimeout(connectTimeout: Long): RetrofitRxBuilder {
+    fun connectTimeout(connectTimeout: Long): RxRetrofitBuilder {
         this.connectTimeout = connectTimeout
         return this
     }
@@ -70,7 +70,7 @@ class RetrofitRxBuilder {
     /**
      * 自定义GSon解析器
      */
-    fun gson(gson: Gson): RetrofitRxBuilder {
+    fun gson(gson: Gson): RxRetrofitBuilder {
         this.gson = gson
         return this
     }
@@ -78,7 +78,7 @@ class RetrofitRxBuilder {
     /**
      * 添加OkHttpClient拦截器
      */
-    fun addInterceptor(interceptor: Interceptor): RetrofitRxBuilder {
+    fun addInterceptor(interceptor: Interceptor): RxRetrofitBuilder {
         if (!interceptorList.contains(interceptor))
             interceptorList.add(interceptor)
         return this

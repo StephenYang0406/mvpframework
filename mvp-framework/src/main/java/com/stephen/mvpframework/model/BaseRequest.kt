@@ -6,6 +6,6 @@ package com.stephen.mvpframework.model
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
-open class BaseRequest<T> : BaseForm() {
-    var data: T? = null
+open class BaseRequest: BaseForm() {
+    var data: Any? = null
 }

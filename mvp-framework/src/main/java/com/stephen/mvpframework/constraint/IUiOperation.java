@@ -19,7 +19,7 @@ public interface IUiOperation {
     void onViewRefresh();
 
     //自动装填方法
-    void autoWire();
+    void autowire();
 
     //设置刷新模式
     void setRefreshMode(boolean refreshMode);
@@ -33,18 +33,18 @@ public interface IUiOperation {
     //拍照后返回结果
     void onTakePhotoResult(File file);
 
-    //展示空布局
-    void displayEmptyView();
-
-    //展示网络异常布局
-    void displayNetWorkErrorView();
-
-    //展示服务器异常布局
-    void displayErrorView();
-
-    //展示内容布局
-    void displayContentView();
-
-    //关闭列表刷新加载
-    void stopRefresh();
+//    //展示空布局
+//    void displayEmptyView();
+//
+//    //展示网络异常布局
+//    void displayNetWorkErrorView();
+//
+//    //展示服务器异常布局
+//    void displayErrorView();
+//
+//    //展示内容布局
+//    void displayContentView();
+//
+//    //关闭列表刷新加载
+//    void stopRefresh();
 }

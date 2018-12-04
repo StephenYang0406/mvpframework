@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.FrameLayout
 import com.stephen.mvpframework.R
-import com.stephen.mvpframework.annotation.InjectForm
 import com.stephen.mvpframework.annotation.InjectLayoutId
 import com.stephen.mvpframework.annotation.InjectPresenter
 import com.stephen.mvpframework.handler.ContextHandler
@@ -20,7 +19,7 @@ import com.stephen.mvpframework.constraint.IUiOperation
 import com.stephen.mvpframework.utils.AnnotationUtil
 import com.stephen.mvpframework.utils.LogUtil
 import com.stephen.mvpframework.utils.SystemUtil
-import com.stephen.mvpframework.constraint.BaseView
+import com.stephen.mvpframework.constraint.IView
 import java.io.File
 
 /**
@@ -44,7 +43,7 @@ abstract class AbstractActivity : AppCompatActivity(), IUiOperation {
         if (savedInstanceState == null) {
             mRootView = getLayout()
             setContentView(mRootView)
-            autoWire()
+            autowire()
             bindPresenter()
             onViewInit()
         }
@@ -137,16 +136,14 @@ abstract class AbstractActivity : AppCompatActivity(), IUiOperation {
     }
 
     //自动装填方法
-    override fun autoWire() {
+    override fun autowire() {
         try {
             for (field in javaClass.declaredFields) {
                 field.isAccessible = true
                 //自动装载Presenter
                 if (AnnotationUtil.isHaveAnnotation(field, InjectPresenter::class.java)) {
                     field.set(this, field.type.newInstance())
-                } else if (field.isAnnotationPresent(InjectForm::class.java)) {
-                    field.set(this, field.type.newInstance())
-                }//自动装载Form
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -159,11 +156,11 @@ abstract class AbstractActivity : AppCompatActivity(), IUiOperation {
             if (IPresenter::class.java.isAssignableFrom(field.type)) {
                 field.isAccessible = true
                 try {
-                    (field.get(this) as IPresenter).bindView(this as BaseView)
+                    (field.get(this) as IPresenter).bindView(this as IView)
                 } catch (e: IllegalAccessException) {
                     e.printStackTrace()
                 } catch (e: ClassCastException) {
-                    throw ClassCastException("u must implement BaseView")
+                    throw ClassCastException("u must implement IView")
                 }
 
             }

@@ -6,4 +6,4 @@ package com.stephen.mvpframework.constraint
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
-interface BaseView
+interface IView

@@ -8,7 +8,7 @@ package com.stephen.mvpframework.constraint
  */
 interface IPresenter {
     //绑定View方法
-    fun bindView(view: BaseView)
+    fun bindView(view: IView)
 
     //通用回收方法
     fun recycle()

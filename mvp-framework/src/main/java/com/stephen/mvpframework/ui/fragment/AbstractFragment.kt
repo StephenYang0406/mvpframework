@@ -11,21 +11,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.stephen.mvpframework.R
-import com.stephen.mvpframework.annotation.InjectForm
 import com.stephen.mvpframework.annotation.InjectLayoutId
 import com.stephen.mvpframework.annotation.InjectPresenter
+import com.stephen.mvpframework.constraint.IPresenter
+import com.stephen.mvpframework.constraint.IUiOperation
+import com.stephen.mvpframework.constraint.IView
 import com.stephen.mvpframework.handler.ContextHandler
 import com.stephen.mvpframework.helper.PhotoHelper
 import com.stephen.mvpframework.helper.WarningHelper
 import com.stephen.mvpframework.local.Content
 import com.stephen.mvpframework.network.AbstractObserver
-import com.stephen.mvpframework.constraint.IPresenter
-import com.stephen.mvpframework.constraint.IUiOperation
 import com.stephen.mvpframework.ui.activity.AbstractActivity
 import com.stephen.mvpframework.utils.AnnotationUtil
 import com.stephen.mvpframework.utils.LogUtil
 import com.stephen.mvpframework.utils.SystemUtil
-import com.stephen.mvpframework.constraint.BaseView
 import java.io.File
 
 /**
@@ -56,7 +55,7 @@ abstract class AbstractFragment : Fragment(), IUiOperation {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState == null) {
-            autoWire()
+            autowire()
             bindPresenter()
             onViewInit()
         }
@@ -173,17 +172,14 @@ abstract class AbstractFragment : Fragment(), IUiOperation {
         return null
     }
 
-    override fun autoWire() {
+    override fun autowire() {
         try {
             for (field in javaClass.declaredFields) {
                 field.isAccessible = true
                 //自动装载Presenter
-                if (AnnotationUtil.isHaveAnnotation(field, InjectPresenter::class.java))
+                if (AnnotationUtil.isHaveAnnotation(field, InjectPresenter::class.java)) {
                     field.set(this, field.type.newInstance())
-                else if (field.isAnnotationPresent(InjectForm::class.java)) {
-                    field.set(this, field.type.newInstance())
-                }//自动装载ViewHolder
-                //自动装载Form
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -196,11 +192,11 @@ abstract class AbstractFragment : Fragment(), IUiOperation {
             if (IPresenter::class.java.isAssignableFrom(field.type)) {
                 field.isAccessible = true
                 try {
-                    (field.get(this) as IPresenter).bindView(this as BaseView)
+                    (field.get(this) as IPresenter).bindView(this as IView)
                 } catch (e: IllegalAccessException) {
                     e.printStackTrace()
                 } catch (e: ClassCastException) {
-                    throw ClassCastException("u must implement BaseView")
+                    throw ClassCastException("u must implement IView")
                 }
             }
         }

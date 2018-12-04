@@ -1,1 +1,1 @@
-include ':mvp-framework'
+include ':mvp-framework', ':demo'

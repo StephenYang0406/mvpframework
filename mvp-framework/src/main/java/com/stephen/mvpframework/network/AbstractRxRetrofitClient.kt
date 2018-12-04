@@ -2,7 +2,6 @@ package com.stephen.mvpframework.network
 
 import com.stephen.mvpframework.annotation.RetryAnno
 import com.stephen.mvpframework.helper.RetryHelper
-import com.stephen.mvpframework.model.BaseForm
 import com.stephen.mvpframework.model.BaseRequest
 import com.stephen.mvpframework.model.BaseResponse
 import com.stephen.mvpframework.utils.AnnotationUtil
@@ -20,46 +19,31 @@ import kotlin.reflect.KClass
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
-abstract class AbstractRxHttpClient {
+abstract class AbstractRxRetrofitClient<R : BaseRequest> {
     /**
      * 获取请求发送实体
      */
-    abstract fun getRequest(): BaseRequest<*>
+    protected abstract fun getRequest(): R
 
+    /**
+     * 获取项目接口API实体类型
+     */
+    protected abstract fun getApiService(): KClass<*>
 
-    abstract fun getApiService(): KClass<Any>
+    /**
+     * 获取项目自定义Retrofit实体
+     */
+    protected abstract fun getRetrofit(): Retrofit
 
-    abstract fun getRetrofit(): Retrofit
-
+    /**
+     * 填充参数
+     */
     @Suppress("UNCHECKED_CAST")
     private fun fillParams(params: Any?): RequestBody {
         val baseRequest = getRequest()
-        when (params) {
-            is String -> {
-                baseRequest as BaseRequest<String>
-                baseRequest.data = params
-            }
-            is Map<*, *> -> {
-                baseRequest as BaseRequest<Map<*, *>>
-                baseRequest.data = params
-            }
-            null -> {
-            }
-            else -> {
-                baseRequest as BaseRequest<BaseForm>
-                baseRequest.data = params as BaseForm
-            }
-        }
-        fillExtras(baseRequest)
+        baseRequest.data = params
         LogUtil.testInfo("criteria---->$baseRequest")
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), baseRequest.toString())
-    }
-
-    /**
-     * 重写填充和data同级额外字段
-     */
-    protected fun fillExtras(request: BaseRequest<*>) {
-
     }
 
     /**

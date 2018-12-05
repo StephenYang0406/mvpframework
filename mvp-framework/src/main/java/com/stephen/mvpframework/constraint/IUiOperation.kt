@@ -1,37 +1,34 @@
-package com.stephen.mvpframework.constraint;
+package com.stephen.mvpframework.constraint
 
-
-import java.io.File;
+import java.io.File
 
 /**
- * UI操作汇总接口
- * Created by Stephen on 2017/10/20.
+ * UI操作约束接口
+ * Created by Stephen on 2018/12/4.
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
-
-public interface IUiOperation {
-
+interface IUiOperation {
     //初始方法
-    void onViewInit();
+    fun onViewInit()
 
     //刷新方法
-    void onViewRefresh();
+    fun onViewRefresh()
 
     //自动装填方法
-    void autowire();
+    fun autowire()
 
     //设置刷新模式
-    void setRefreshMode(boolean refreshMode);
+    fun setRefreshMode(refreshMode: Boolean)
 
     //获取刷新模式
-    boolean getRefreshMode();
+    fun getRefreshMode(): Boolean
 
     //绑定Presenter
-    void bindPresenter();
+    fun bindPresenter()
 
     //拍照后返回结果
-    void onTakePhotoResult(File file);
+    fun onTakePhotoResult(file: File?)
 
 //    //展示空布局
 //    void displayEmptyView();

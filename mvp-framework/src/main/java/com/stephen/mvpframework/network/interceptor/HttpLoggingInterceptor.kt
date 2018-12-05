@@ -39,14 +39,19 @@ class HttpLoggingInterceptor : Interceptor {
         return this.level
     }
 
-    override fun intercept(chain: Interceptor.Chain): Response? {
+    override fun intercept(chain: Interceptor.Chain): Response {
         val level = this.level
         val request = chain.request()
         if (level == Level.NONE) {
             return try {
                 chain.proceed(request)
-            } catch (e: IOException) {
-                null
+            } catch (e: Exception) {
+                Response.Builder()
+                        .request(request)
+                        .code(0)
+                        .message("IOException")
+                        .protocol(Protocol.HTTP_1_1)
+                        .build()
             }
         } else {
             val logBody = level == Level.BODY
@@ -131,8 +136,13 @@ class HttpLoggingInterceptor : Interceptor {
             val response: Response
             try {
                 response = chain.proceed(request)
-            } catch (var25: IOException) {
-                return null
+            } catch (var25: Exception) {
+                return Response.Builder()
+                        .request(request)
+                        .code(0)
+                        .message("IOException")
+                        .protocol(Protocol.HTTP_1_1)
+                        .build()
             }
 
             val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
@@ -220,6 +230,7 @@ class HttpLoggingInterceptor : Interceptor {
 
     interface Logger {
         fun log(var1: String)
+
         companion object {
             //Platform.get().log(4, message, (Throwable) null);
             val DEFAULT = object : Logger {

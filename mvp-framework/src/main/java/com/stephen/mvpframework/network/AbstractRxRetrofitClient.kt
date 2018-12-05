@@ -7,6 +7,8 @@ import com.stephen.mvpframework.model.BaseResponse
 import com.stephen.mvpframework.utils.AnnotationUtil
 import com.stephen.mvpframework.utils.LogUtil
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -73,7 +75,7 @@ abstract class AbstractRxRetrofitClient<R : BaseRequest> {
             if (AnnotationUtil.isHaveAnnotation(executeMethod, RetryAnno::class.java)) {
                 RetryHelper.putObservable(observable)
             }
-            return observable
+            return observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
             LogUtil.testError("没有找到该方法--->$methodName")

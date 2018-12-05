@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.stephen.mvpframework">
 
-    <application>
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="n">
         <!--适配AndroidN文件访问-->
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -140,7 +140,7 @@ class HttpLoggingInterceptor : Interceptor {
                 return Response.Builder()
                         .request(request)
                         .code(0)
-                        .message("IOException")
+                        .message(var25.message ?: "未知错误")
                         .protocol(Protocol.HTTP_1_1)
                         .build()
             }

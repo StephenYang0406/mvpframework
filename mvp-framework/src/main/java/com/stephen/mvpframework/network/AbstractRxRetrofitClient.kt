@@ -1,5 +1,6 @@
 package com.stephen.mvpframework.network
 
+import android.text.TextUtils
 import com.stephen.mvpframework.annotation.RetryAnno
 import com.stephen.mvpframework.helper.RetryHelper
 import com.stephen.mvpframework.model.BaseRequest
@@ -12,6 +13,9 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Retrofit
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
 import java.lang.reflect.InvocationTargetException
 import kotlin.reflect.KClass
 
@@ -67,15 +71,39 @@ abstract class AbstractRxRetrofitClient<R : BaseRequest> {
     })
      */
     @Suppress("UNCHECKED_CAST")
-    fun <T : BaseResponse<*>> request(methodName: String, params: Any? = null): Observable<T>? {
+    fun <T : BaseResponse<*>> request(methodName: String, params: Any? = null, map: Map<*, *>? = null): Observable<T>? {
         try {
             val apiService = getRetrofit().create(getApiService().java)
-            val executeMethod = apiService.javaClass.getMethod(methodName, RequestBody::class.java)
-            val observable = executeMethod.invoke(apiService, fillParams(params)) as Observable<T>
-            if (AnnotationUtil.isHaveAnnotation(executeMethod, RetryAnno::class.java)) {
-                RetryHelper.putObservable(observable)
+            //循环所有方法
+            apiService.javaClass.declaredMethods.forEach {
+                //匹配方法名
+                if (TextUtils.equals(it.name, methodName)) {
+                    //如果参数>1个,判断参数注解数量,适配1.8以下
+                    val observable = if (it.parameterAnnotations.size > 1) {
+                        it.invoke(apiService, fillParams(params), map) as Observable<T>
+                    } else {
+                        //如果是Body类型
+                        if (it.parameterAnnotations[0][0] is Body) {
+                            it.invoke(apiService, fillParams(params)) as Observable<T>
+                        } else {//QueryMap类型
+                            it.invoke(apiService, map) as Observable<T>
+                        }
+                    }
+                    //是否包含重试注解
+                    if (AnnotationUtil.isHaveAnnotation(it, RetryAnno::class.java)) {
+                        RetryHelper.putObservable(observable)
+                    }
+                    return observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                }
             }
-            return observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            LogUtil.testError("没有找到该方法--->$methodName")
+            return null
+//            val executeMethod = apiService.javaClass.getMethod(methodName, RequestBody::class.java)
+//            val observable = executeMethod.invoke(apiService, fillParams(params)) as Observable<T>
+//            if (AnnotationUtil.isHaveAnnotation(executeMethod, RetryAnno::class.java)) {
+//                RetryHelper.putObservable(observable)
+//            }
+//            return observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
             LogUtil.testError("没有找到该方法--->$methodName")

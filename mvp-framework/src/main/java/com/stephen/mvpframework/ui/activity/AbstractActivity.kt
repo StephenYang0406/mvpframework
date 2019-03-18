@@ -55,11 +55,6 @@ abstract class AbstractActivity : AppCompatActivity(), IUiOperation {
             onViewRefresh()
     }
 
-
-    override fun onBackPressed() {
-        finish()
-    }
-
     override fun finish() {
         super.finish()
         //取消网络订阅

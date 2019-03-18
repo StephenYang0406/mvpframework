@@ -58,9 +58,15 @@ object SystemUtil {
     fun getVersionCode(): Long {
         var versionCode = 0L
         try {
-            versionCode = ContextHandler.currentActivity().packageManager
-                    .getPackageInfo(ContextHandler.currentActivity().packageName, 0)
-                    .longVersionCode
+            versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ContextHandler.currentActivity().packageManager
+                        .getPackageInfo(ContextHandler.currentActivity().packageName, 0)
+                        .longVersionCode
+            } else {
+                ContextHandler.currentActivity().packageManager
+                        .getPackageInfo(ContextHandler.currentActivity().packageName, 0)
+                        .versionCode.toLong()
+            }
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }

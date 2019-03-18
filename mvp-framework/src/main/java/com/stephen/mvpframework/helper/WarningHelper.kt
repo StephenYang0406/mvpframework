@@ -1,9 +1,13 @@
 package com.stephen.mvpframework.helper
 
 import android.graphics.drawable.Drawable
+import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
 import android.text.Html
 import android.text.Spanned
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.stephen.mvpframework.handler.ContextHandler
 
 /**
@@ -29,5 +33,8 @@ object WarningHelper {
     fun fromHtml(source: String): Spanned {
         return Html.fromHtml(source)
     }
+
+    fun infalate(@LayoutRes layoutId: Int, root: ViewGroup? = null, attacheToRoot: Boolean = false) =
+            LayoutInflater.from(ContextHandler.currentActivity()).inflate(layoutId, root, attacheToRoot)
 
 }

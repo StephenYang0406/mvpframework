@@ -2,7 +2,6 @@ package com.stephen.mvpframework
 
 import android.app.Application
 import com.stephen.mvpframework.handler.ContextHandler
-import io.realm.Realm
 
 /**
  *
@@ -16,6 +15,6 @@ class BaseApplication : Application(){
         //储存Application
         ContextHandler.saveApplication(this)
         //数据库初始化
-        Realm.init(this)
+        //Realm.init(this)
     }
 }

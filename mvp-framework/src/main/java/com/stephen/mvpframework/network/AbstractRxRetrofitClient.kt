@@ -82,10 +82,10 @@ abstract class AbstractRxRetrofitClient<R : BaseRequest> {
                     val observable = if (it.parameterAnnotations.size > 1) {
                         it.invoke(apiService, fillParams(params), map) as Observable<T>
                     } else {
-                        //如果是Body类型
-                        if (it.parameterAnnotations[0][0] is Body) {
+                        //post请求
+                        if (AnnotationUtil.isHaveAnnotation(it, POST::class.java)) {
                             it.invoke(apiService, fillParams(params)) as Observable<T>
-                        } else {//QueryMap类型
+                        } else {//get请求
                             it.invoke(apiService, map) as Observable<T>
                         }
                     }

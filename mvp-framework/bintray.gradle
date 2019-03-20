@@ -1,7 +1,7 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.0.7"//定义版本标识
+version = "1.0.9"//定义版本标识
 
 def siteUrl = 'https://github.com/StephenYoungq/mvpframework'
 def gitUrl = 'https://github.com/StephenYoungq/mvpframework.git'
@@ -45,6 +45,7 @@ task sourcesJar(type: Jar) {
 }
 task javadoc(type: Javadoc) {
     failOnError false
+    options.encoding = "UTF-8"
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }

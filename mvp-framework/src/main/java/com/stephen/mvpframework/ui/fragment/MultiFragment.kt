@@ -1,5 +1,6 @@
 package com.stephen.mvpframework.ui.fragment
 
+import com.stephen.mvpframework.handler.ContextHandler
 import com.stephen.mvpframework.ui.activity.FragmentContainerActivity
 
 /**
@@ -8,7 +9,9 @@ import com.stephen.mvpframework.ui.activity.FragmentContainerActivity
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
-abstract class MultiFragment(private val containerActivity: FragmentContainerActivity) : AbstractFragment() {
+abstract class MultiFragment : AbstractFragment() {
+
+    private val containerActivity: FragmentContainerActivity = ContextHandler.currentActivity() as FragmentContainerActivity
 
     fun route(fragment: MultiFragment) {
         containerActivity.route(fragment)

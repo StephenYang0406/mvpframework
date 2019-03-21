@@ -87,7 +87,7 @@ public abstract class AbstractRecyclerAdapter4Java<V> extends RecyclerView.Adapt
     protected abstract void bindData(@NonNull AbstractRecyclerAdapter4Java.BaseViewHolder holder, int position, V vo);
 
     public interface BaseOnItemClickListener<T> {
-        void onItemClickListener(T var1, int var2);
+        void onItemClickListener(T vo, int position);
     }
 
     public static class BaseViewHolder extends RecyclerView.ViewHolder {

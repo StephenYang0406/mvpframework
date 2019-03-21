@@ -25,6 +25,14 @@ class SampleActivity : AbstractActivity(), IView {
         tv_sample.setOnClickListener {
             presenter.doNetwork()
         }
+//        SampleAdapter()
+//                .setDataList(ArrayList())
+//                .setOption(AbstractRecyclerAdapter.OptionBuilder()
+//                        .addBaseOnItemClickListener(object:AbstractRecyclerAdapter.BaseOnItemClickListener<BaseVo>{
+//                            override fun onItemClickListener(v: BaseVo, position: Int) {
+//
+//                            }
+//                        }))
     }
 
     override fun onViewRefresh() {

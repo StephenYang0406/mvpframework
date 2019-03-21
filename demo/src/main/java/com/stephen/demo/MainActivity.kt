@@ -11,6 +11,7 @@ class MainActivity : AbstractActivity() {
     }
 
     override fun onViewRefresh() {
+
     }
 
 }

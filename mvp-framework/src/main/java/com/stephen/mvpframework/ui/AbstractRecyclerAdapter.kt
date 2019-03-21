@@ -47,6 +47,12 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
                     baseOnItemClickListener?.onItemClickListener(voList[position], position)
                 }
             }
+            if (baseOnItemLongClickListener != null) {
+                viewHolder.itemView.setOnLongClickListener {
+                    baseOnItemClickListener?.onItemClickListener(voList[position], position)
+                    true
+                }
+            }
             if (firstMarginTopValue > 0) {
                 if (position == 0) {
                     val layoutParams = viewHolder.itemView.layoutParams as RecyclerView.LayoutParams
@@ -64,7 +70,7 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
     /*
         设置数据列表
      */
-    fun setDataList(list: ArrayList<V>): AbstractRecyclerAdapter<*> {
+    fun setDataList(list: ArrayList<V>): AbstractRecyclerAdapter<V> {
         voList = list
         return this
     }
@@ -72,7 +78,7 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
     /*
         设置可选项
      */
-    fun setOption(option: OptionBuilder): AbstractRecyclerAdapter<*> {
+    fun setOption(option: OptionBuilder): AbstractRecyclerAdapter<V> {
         this.option = option
         return this
     }
@@ -90,24 +96,32 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
     /*
         基础点击监听
      */
-    interface BaseOnItemClickListener {
-        fun <T> onItemClickListener(t: T, position: Int)
+    interface BaseOnItemClickListener<V : BaseVo> {
+        fun onItemClickListener(vo: V, position: Int)
     }
 
     /**
      * 选项构造器
      */
     class OptionBuilder {
-        var baseOnItemClickListener: BaseOnItemClickListener? = null
+        var baseOnItemClickListener: BaseOnItemClickListener<in BaseVo>? = null
+        var baseOnItemLongClickListener: BaseOnItemClickListener<in BaseVo>? = null
         var firstMarginTopValue: Int = 0
         /*
             添加基础监听
          */
-        fun addBaseOnItemClickListener(listener: BaseOnItemClickListener): OptionBuilder {
+        fun addBaseOnItemClickListener(listener: BaseOnItemClickListener<in BaseVo>): OptionBuilder {
             this.baseOnItemClickListener = listener
             return this
         }
 
+        //长按监听
+        fun addBaseOnItemLongClickListener(listener: BaseOnItemClickListener<in BaseVo>): OptionBuilder {
+            this.baseOnItemLongClickListener = listener
+            return this
+        }
+
+        //添加顶部margin
         fun addFirstMarginTopValue(firstMarginTopValue: Int): OptionBuilder {
             this.firstMarginTopValue = firstMarginTopValue
             return this

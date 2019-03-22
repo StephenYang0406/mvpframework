@@ -6,6 +6,8 @@ import com.stephen.demo.network.SampleObserver
 import com.stephen.demo.network.SampleRxRetrofitClient
 import com.stephen.demo.sample.activity.SampleActivity
 import com.stephen.mvpframework.constraint.AbstractPresenter
+import com.stephen.mvpframework.model.BaseForm
+import com.stephen.mvpframework.model.BaseVo
 
 /**
  * 示例Presenter
@@ -20,10 +22,23 @@ class SamplePresenter : AbstractPresenter<SampleActivity>() {
 
     //网络请求
     fun doNetwork() {
+//        val map = mutableMapOf<String, String>()
+//        map["loginName"] = "test"
+//        map["pwd"] = "111"
+//        SampleRxRetrofitClient()
+//                .request<SampleResponse<String>>("login", map = map)
+//                ?.subscribe(object : SampleObserver<String>() {
+//                    override fun success(data: String) {
+//
+//                    }
+//                })
+        val map = mutableMapOf<String, Int>()
+        map["page"] = 1
+        map["size"] = 10
         SampleRxRetrofitClient()
-                .request<SampleResponse<LoginVo>>("checkToken")
-                ?.subscribe(object : SampleObserver<LoginVo>() {
-                    override fun success(data: LoginVo) {
+                .request<SampleResponse<BaseVo>>("getTotalTenderList", map = map)
+                ?.subscribe(object : SampleObserver<BaseVo>() {
+                    override fun success(data: BaseVo) {
 
                     }
                 })

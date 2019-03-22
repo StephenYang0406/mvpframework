@@ -1,7 +1,7 @@
 package com.stephen.demo.sample.adapter
 
 import android.view.View
-import com.stephen.mvpframework.model.BaseVo
+import com.stephen.demo.sample.vo.SapmleVo
 import com.stephen.mvpframework.ui.AbstractRecyclerAdapter
 
 /**
@@ -9,8 +9,8 @@ import com.stephen.mvpframework.ui.AbstractRecyclerAdapter
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
-class SampleAdapter : AbstractRecyclerAdapter<BaseVo>() {
-    override fun bindData(position: Int, itemView: View, vo: BaseVo) {
+class SampleAdapter : AbstractRecyclerAdapter<SapmleVo>() {
+    override fun bindData(position: Int, itemView: View, vo: SapmleVo) {
 
     }
 }

@@ -1,10 +1,13 @@
 package com.stephen.demo.sample.activity
 
 import com.stephen.demo.R
+import com.stephen.demo.sample.adapter.SampleAdapter
 import com.stephen.demo.sample.presenter.SamplePresenter
+import com.stephen.demo.sample.vo.SapmleVo
 import com.stephen.mvpframework.annotation.InjectLayoutId
 import com.stephen.mvpframework.annotation.InjectPresenter
 import com.stephen.mvpframework.constraint.IView
+import com.stephen.mvpframework.ui.AbstractRecyclerAdapter
 import com.stephen.mvpframework.ui.activity.AbstractActivity
 import kotlinx.android.synthetic.main.activity_sample.*
 
@@ -25,14 +28,16 @@ class SampleActivity : AbstractActivity(), IView {
         tv_sample.setOnClickListener {
             presenter.doNetwork()
         }
-//        SampleAdapter()
-//                .setDataList(ArrayList())
-//                .setOption(AbstractRecyclerAdapter.OptionBuilder()
-//                        .addBaseOnItemClickListener(object:AbstractRecyclerAdapter.BaseOnItemClickListener<BaseVo>{
-//                            override fun onItemClickListener(v: BaseVo, position: Int) {
+//        SampleAdapter().apply {
+//            setDataList(ArrayList())
+//            setOption(OptionBuilder()
+//                    .addBaseOnItemClickListener(object : AbstractRecyclerAdapter.BaseOnItemClickListener<SapmleVo> {
+//                        override fun onItemClickListener(vo: SapmleVo, position: Int) {
 //
-//                            }
-//                        }))
+//                        }
+//                    }))
+        //}
+
     }
 
     override fun onViewRefresh() {

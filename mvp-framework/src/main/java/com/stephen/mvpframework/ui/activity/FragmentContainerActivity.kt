@@ -34,10 +34,10 @@ abstract class FragmentContainerActivity : AbstractActivity() {
         }
         //添加跳转的Fragment
         beginTransaction.add(getFragmentContainer().id, fragment)
-        //提交事务
-        beginTransaction.commitNowAllowingStateLoss()
         //添加到栈顶
         mFragmentStack.push(fragment)
+        //提交事务
+        beginTransaction.commitNowAllowingStateLoss()
     }
 
     fun back() {

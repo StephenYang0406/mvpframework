@@ -49,7 +49,7 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
             }
             if (baseOnItemLongClickListener != null) {
                 viewHolder.itemView.setOnLongClickListener {
-                    baseOnItemClickListener?.onItemClickListener(voList[position], position)
+                    baseOnItemLongClickListener?.onItemClickListener(voList[position], position)
                     true
                 }
             }
@@ -70,17 +70,15 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
     /*
         设置数据列表
      */
-    fun setDataList(list: ArrayList<V>): AbstractRecyclerAdapter<V> {
+    fun setDataList(list: ArrayList<V>) {
         voList = list
-        return this
     }
 
     /*
         设置可选项
      */
-    fun setOption(option: OptionBuilder): AbstractRecyclerAdapter<V> {
+    fun setOption(option: OptionBuilder) {
         this.option = option
-        return this
     }
 
     /*
@@ -103,20 +101,20 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
     /**
      * 选项构造器
      */
-    class OptionBuilder {
-        var baseOnItemClickListener: BaseOnItemClickListener<in BaseVo>? = null
-        var baseOnItemLongClickListener: BaseOnItemClickListener<in BaseVo>? = null
+    inner class OptionBuilder {
+        var baseOnItemClickListener: BaseOnItemClickListener<V>? = null
+        var baseOnItemLongClickListener: BaseOnItemClickListener<V>? = null
         var firstMarginTopValue: Int = 0
         /*
             添加基础监听
          */
-        fun addBaseOnItemClickListener(listener: BaseOnItemClickListener<in BaseVo>): OptionBuilder {
+        fun addBaseOnItemClickListener(listener: BaseOnItemClickListener<V>): OptionBuilder {
             this.baseOnItemClickListener = listener
             return this
         }
 
         //长按监听
-        fun addBaseOnItemLongClickListener(listener: BaseOnItemClickListener<in BaseVo>): OptionBuilder {
+        fun addBaseOnItemLongClickListener(listener: BaseOnItemClickListener<V>): OptionBuilder {
             this.baseOnItemLongClickListener = listener
             return this
         }

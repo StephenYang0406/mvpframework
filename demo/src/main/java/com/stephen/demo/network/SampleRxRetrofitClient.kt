@@ -38,7 +38,8 @@ class SampleRxRetrofitClient : AbstractRxRetrofitClient<SampleRequest>() {
     override fun getRetrofit(): Retrofit {
         if (retrofit == null) {
             retrofit = RxRetrofitBuilder()
-                    .baseUrl("http://pspt.sqsm.com")
+                    //.baseUrl("http://pspt.sqsm.com")
+                    .baseUrl("http://114.115.140.129:8080")
                     .build()
         }
         return retrofit!!

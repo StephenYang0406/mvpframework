@@ -9,5 +9,5 @@ import com.stephen.mvpframework.model.BaseRequest
  * <(￣ c￣)y▂ξ
  */
 class SampleRequest : BaseRequest() {
-    var token: String? = null
+    var token: String? = "token"
 }

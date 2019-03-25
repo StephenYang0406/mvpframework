@@ -16,11 +16,11 @@ class SampleRxRetrofitClient : AbstractRxRetrofitClient<SampleRequest>() {
     /**
      * 返回统一请求实体,根据不同项目填充不同请求
      */
-    override fun getRequest(): SampleRequest {
-        val sampleRequest = SampleRequest()
-        sampleRequest.token = ""
-        return sampleRequest
-    }
+//    override fun getRequest(): SampleRequest {
+//        val sampleRequest = SampleRequest()
+//        sampleRequest.token = ""
+//        return sampleRequest
+//    }
 
     /**
      * 返回本项目API接口类

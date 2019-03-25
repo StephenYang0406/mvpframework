@@ -30,7 +30,7 @@ abstract class AbstractRxRetrofitClient<R : BaseRequest> {
     /**
      * 获取请求发送实体
      */
-    protected abstract fun getRequest(): R
+    //protected abstract fun getRequest(): R
 
     /**
      * 获取项目接口API实体类型
@@ -45,12 +45,17 @@ abstract class AbstractRxRetrofitClient<R : BaseRequest> {
     /**
      * 填充参数
      */
+//    @Suppress("UNCHECKED_CAST")
+//    private fun fillParams(params: Any?): RequestBody {
+//        val baseRequest = getRequest()
+//        baseRequest.data = params
+//        LogUtil.testInfo("criteria---->$baseRequest")
+//        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), baseRequest.toString())
+//    }
     @Suppress("UNCHECKED_CAST")
-    private fun fillParams(params: Any?): RequestBody {
-        val baseRequest = getRequest()
-        baseRequest.data = params
-        LogUtil.testInfo("criteria---->$baseRequest")
-        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), baseRequest.toString())
+    private fun fillParams(params: R?): RequestBody {
+        LogUtil.testInfo("criteria---->$params")
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), params.toString())
     }
 
     /**
@@ -72,7 +77,7 @@ abstract class AbstractRxRetrofitClient<R : BaseRequest> {
     })
      */
     @Suppress("UNCHECKED_CAST")
-    fun <T : BaseResponse<*>> request(methodName: String, params: Any? = null, map: Map<*, *>? = null): Observable<T>? {
+    fun <T : BaseResponse<*>> request(methodName: String, params: R? = null, map: Map<*, *>? = null): Observable<T>? {
         try {
             val apiService = getRetrofit().create(getApiService().java)
             //循环所有方法

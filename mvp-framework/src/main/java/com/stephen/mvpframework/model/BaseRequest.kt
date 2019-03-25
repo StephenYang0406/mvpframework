@@ -7,5 +7,5 @@ package com.stephen.mvpframework.model
  * <(￣ c￣)y▂ξ
  */
 open class BaseRequest: BaseForm() {
-    var data: Any? = null
+    //var data: Any? = null
 }

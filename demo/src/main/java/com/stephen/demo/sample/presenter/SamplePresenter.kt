@@ -1,6 +1,7 @@
 package com.stephen.demo.sample.presenter
 
 import com.stephen.demo.model.LoginVo
+import com.stephen.demo.model.SampleRequest
 import com.stephen.demo.model.SampleResponse
 import com.stephen.demo.network.SampleObserver
 import com.stephen.demo.network.SampleRxRetrofitClient
@@ -22,6 +23,13 @@ class SamplePresenter : AbstractPresenter<SampleActivity>() {
 
     //网络请求
     fun doNetwork() {
+        SampleRxRetrofitClient()
+                .request<SampleResponse<BaseVo>>("checkToken", SampleRequest())
+                ?.subscribe(object : SampleObserver<BaseVo>() {
+                    override fun success(data: BaseVo) {
+
+                    }
+                })
 //        val map = mutableMapOf<String, String>()
 //        map["loginName"] = "test"
 //        map["pwd"] = "111"
@@ -32,15 +40,15 @@ class SamplePresenter : AbstractPresenter<SampleActivity>() {
 //
 //                    }
 //                })
-        val map = mutableMapOf<String, Int>()
-        map["page"] = 1
-        map["size"] = 10
-        SampleRxRetrofitClient()
-                .request<SampleResponse<BaseVo>>("getTotalTenderList", map = map)
-                ?.subscribe(object : SampleObserver<BaseVo>() {
-                    override fun success(data: BaseVo) {
-
-                    }
-                })
+//        val map = mutableMapOf<String, Int>()
+//        map["page"] = 1
+//        map["size"] = 10
+//        SampleRxRetrofitClient()
+//                .request<SampleResponse<BaseVo>>("getTotalTenderList", map = map)
+//                ?.subscribe(object : SampleObserver<BaseVo>() {
+//                    override fun success(data: BaseVo) {
+//
+//                    }
+//                })
     }
 }

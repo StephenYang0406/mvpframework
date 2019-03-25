@@ -18,8 +18,14 @@ import com.stephen.mvpframework.utils.ScreenUtil
  * <(￣ c￣)y▂ξ
  */
 abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<AbstractRecyclerAdapter.BaseViewHolder>() {
-    protected var voList = ArrayList<V>()
-    private var option: OptionBuilder? = null
+    var voList = ArrayList<V>()
+    //基础点击事件
+    var baseOnItemClickListener: (vo: V) -> Unit = { _ -> }
+    //长按点击事件
+    var baseOnItemLongClickListener: (vo: V) -> Unit = { _ -> }
+    //第一个条目顶部margin
+    var firstMarginTopValue: Int = 0
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AbstractRecyclerAdapter.BaseViewHolder {
         val itemLayoutId = AnnotationUtil.getAnnotation(this.javaClass, InjectItemId::class.java).ID
         if (itemLayoutId == 0) {
@@ -31,7 +37,7 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
     }
 
     override fun onBindViewHolder(viewHolder: BaseViewHolder, position: Int) {
-        initOption(option, viewHolder, position)
+        initOption(viewHolder, position)
         bindData(position, viewHolder.itemView, voList[position])
     }
 
@@ -40,46 +46,30 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
     /*
         初始化可选设置
      */
-    private fun initOption(option: OptionBuilder?, viewHolder: BaseViewHolder, position: Int) {
-        option?.run {
-            if (baseOnItemClickListener != null) {
-                viewHolder.itemView.setOnClickListener {
-                    baseOnItemClickListener?.onItemClickListener(voList[position], position)
-                }
-            }
-            if (baseOnItemLongClickListener != null) {
-                viewHolder.itemView.setOnLongClickListener {
-                    baseOnItemLongClickListener?.onItemClickListener(voList[position], position)
-                    true
-                }
-            }
-            if (firstMarginTopValue > 0) {
-                if (position == 0) {
-                    val layoutParams = viewHolder.itemView.layoutParams as RecyclerView.LayoutParams
-                    layoutParams.topMargin = ScreenUtil.dp2px(firstMarginTopValue)
-                    viewHolder.itemView.layoutParams = layoutParams
-                } else {
-                    val layoutParams = viewHolder.itemView.layoutParams as RecyclerView.LayoutParams
-                    layoutParams.topMargin = 0
-                    viewHolder.itemView.layoutParams = layoutParams
-                }
+    private fun initOption(viewHolder: BaseViewHolder, position: Int) {
+        //点击事件
+        viewHolder.itemView.setOnClickListener {
+            baseOnItemClickListener(voList[position])
+        }
+        //长按点击事件
+        viewHolder.itemView.setOnLongClickListener {
+            baseOnItemLongClickListener(voList[position])
+            true
+        }
+        //调整第一个条目顶部margin
+        if (firstMarginTopValue > 0) {
+            if (position == 0) {
+                val layoutParams = viewHolder.itemView.layoutParams as RecyclerView.LayoutParams
+                layoutParams.topMargin = ScreenUtil.dp2px(firstMarginTopValue)
+                viewHolder.itemView.layoutParams = layoutParams
+            } else {
+                val layoutParams = viewHolder.itemView.layoutParams as RecyclerView.LayoutParams
+                layoutParams.topMargin = 0
+                viewHolder.itemView.layoutParams = layoutParams
             }
         }
     }
 
-    /*
-        设置数据列表
-     */
-    fun setDataList(list: ArrayList<V>) {
-        voList = list
-    }
-
-    /*
-        设置可选项
-     */
-    fun setOption(option: OptionBuilder) {
-        this.option = option
-    }
 
     /*
         绑定数据方法
@@ -90,39 +80,4 @@ abstract class AbstractRecyclerAdapter<V : BaseVo> : RecyclerView.Adapter<Abstra
      * 基础ViewHolder
      */
     class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    /*
-        基础点击监听
-     */
-    interface BaseOnItemClickListener<V : BaseVo> {
-        fun onItemClickListener(vo: V, position: Int)
-    }
-
-    /**
-     * 选项构造器
-     */
-    inner class OptionBuilder {
-        var baseOnItemClickListener: BaseOnItemClickListener<V>? = null
-        var baseOnItemLongClickListener: BaseOnItemClickListener<V>? = null
-        var firstMarginTopValue: Int = 0
-        /*
-            添加基础监听
-         */
-        fun addBaseOnItemClickListener(listener: BaseOnItemClickListener<V>): OptionBuilder {
-            this.baseOnItemClickListener = listener
-            return this
-        }
-
-        //长按监听
-        fun addBaseOnItemLongClickListener(listener: BaseOnItemClickListener<V>): OptionBuilder {
-            this.baseOnItemLongClickListener = listener
-            return this
-        }
-
-        //添加顶部margin
-        fun addFirstMarginTopValue(firstMarginTopValue: Int): OptionBuilder {
-            this.firstMarginTopValue = firstMarginTopValue
-            return this
-        }
-    }
 }

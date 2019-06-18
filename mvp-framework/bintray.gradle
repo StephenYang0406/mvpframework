@@ -1,7 +1,7 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.0.14"//定义版本标识
+version = "1.0.15"//定义版本标识
 
 def siteUrl = 'https://github.com/StephenYoungq/mvpframework'
 def gitUrl = 'https://github.com/StephenYoungq/mvpframework.git'
@@ -67,7 +67,8 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "Stephens"  //发布到Bintray的那个仓库里，默认账户有四个库，我们这里上传到maven库
-        name = "mvpframework4android-koltin"  //需更改，这个名字就是你在Bintray上创建Package的名字，这里会查询，如果此包不存在就会创建一个。
+        name = "mvpframework4android-koltin"
+        //需更改，这个名字就是你在Bintray上创建Package的名字，这里会查询，如果此包不存在就会创建一个。
         userOrg = 'stephenyoung'    //组织名称 organization
         websiteUrl = siteUrl
         vcsUrl = gitUrl

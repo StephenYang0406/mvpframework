@@ -26,17 +26,16 @@ class SampleActivity : AbstractActivity(), IView {
 
     override fun onViewInit() {
         tv_sample.setOnClickListener {
-            presenter.doNetwork()
+            presenter.doGet()
         }
-//        SampleAdapter().apply {
-//            setDataList(ArrayList())
-//            setOption(OptionBuilder()
-//                    .addBaseOnItemClickListener(object : AbstractRecyclerAdapter.BaseOnItemClickListener<SapmleVo> {
-//                        override fun onItemClickListener(vo: SapmleVo, position: Int) {
-//
-//                        }
-//                    }))
-        //}
+        SampleAdapter().apply {
+            //数据列表
+            voList = ArrayList()
+            //基础点击
+            baseOnItemClickListener = { vo -> }// == {  }
+            //顶部margin值
+            firstMarginTopValue = 10
+        }
 
     }
 

@@ -22,11 +22,11 @@ object FileUtil {
             val fos = FileOutputStream(file)
             val bis = BufferedInputStream(inputStream)
             val buffer = ByteArray(1024)
-            var len: Int
-            do {
-                len = bis.read(buffer)
+            var len: Int = bis.read(buffer)
+            while (len > 0) {
                 fos.write(buffer, 0, len)
-            } while (len != -1)
+                len = bis.read(buffer)
+            }
             fos.flush()
             fos.close()
             bis.close()
@@ -47,11 +47,11 @@ object FileUtil {
             val fos = FileOutputStream(file)
             val bis = BufferedInputStream(inputStream)
             val buffer = ByteArray(1024)
-            var len: Int
-            do {
-                len = bis.read(buffer)
+            var len: Int = bis.read(buffer)
+            while (len > 0) {
                 fos.write(buffer, 0, len)
-            } while (len != -1)
+                len = bis.read(buffer)
+            }
             fos.flush()
             fos.close()
             bis.close()

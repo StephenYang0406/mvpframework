@@ -10,4 +10,6 @@
         android:layout_height="wrap_content"
         android:text="hello view"
         android:textSize="16sp" />
+
+
 </LinearLayout>

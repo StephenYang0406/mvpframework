@@ -1,7 +1,7 @@
 package com.stephen.demo.network
 
-import com.stephen.demo.model.LoginVo
 import com.stephen.demo.model.SampleResponse
+import com.stephen.demo.sample.vo.SapmleVo
 import com.stephen.mvpframework.annotation.RetryAnno
 import com.stephen.mvpframework.model.BaseVo
 import io.reactivex.Observable
@@ -18,17 +18,14 @@ import retrofit2.http.QueryMap
  * <(￣ c￣)y▂ξ
  */
 interface SampleApiService {
-    //校验token接口
     @RetryAnno
-    @POST("/jxc/api/customer/checkToken")
-    fun checkToken(@Body post: RequestBody): Observable<SampleResponse<LoginVo>>
+    @POST("/sample")
+    fun doPost(@Body body: RequestBody): Observable<SampleResponse<SapmleVo>>
 
-    //登陆接口
-    @GET("/user/login")
-    fun login(@QueryMap map: Map<String, String>): Observable<SampleResponse<String>>
+    @GET("/sample")
+    fun doGet(@QueryMap map: Map<String, String>): Observable<SampleResponse<SapmleVo>>
 
-    //获取总标段列表接口
-    @GET("/total/getTotalProjectPage")
-    fun getTotalTenderList(@QueryMap map: Map<String, String>): Observable<SampleResponse<BaseVo>>
+    @POST("/sample")
+    fun doMix(@Body body: RequestBody, @QueryMap map: Map<String, String>): Observable<SampleResponse<SapmleVo>>
 
 }

@@ -41,7 +41,7 @@ object PhotoHelper {
             } else {
                 Uri.fromFile(photoFile)
             }
-            LogUtil.testInfo("photoUri----->" + photoUri.toString())
+            LogUtil.testInfo("photoUri----->$photoUri")
             currentPhotoFile = photoFile
             // 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，

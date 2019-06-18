@@ -1,12 +1,13 @@
 package com.stephen.mvpframework.helper
 
+import cn.xjdeyou.roadconstruction.common.`typealias`.PermissionFailed
+import cn.xjdeyou.roadconstruction.common.`typealias`.PermissionRetry
 import com.stephen.mvpframework.handler.ContextHandler
 import com.stephen.mvpframework.ui.activity.AbstractActivity
 import com.stephen.mvpframework.ui.fragment.AbstractFragment
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.Permission
 import com.yanzhenjie.permission.Request
-import com.yanzhenjie.permission.RequestExecutor
 
 /**
  * 权限帮助类
@@ -23,9 +24,9 @@ object PermissionHelper {
         var permissionArray: Array<String> = arrayOf()
         var permissionGroupArray: Array<Array<String>> = arrayOf()
         var successBlock: () -> Unit = {}
-        var failedBlock: (permissionList: List<String>, failedPermissionStr: String) -> Unit = { _, _ -> }
-        var alwaysFailedBlock: (permissionList: List<String>, failedPermissionStr: String) -> Unit = { _, _ -> }
-        var tryAgainBlock: (permissionList: List<String>, failedPermissionStr: String, executor: RequestExecutor) -> Unit = { _, _, _ -> }
+        var failedBlock: PermissionFailed = { _, _ -> }
+        var alwaysFailedBlock: PermissionFailed = { _, _ -> }
+        var tryAgainBlock: PermissionRetry = { _, _, _ -> }
 
         fun permission(permissionArray: Array<String>): Builder {
             this.permissionArray = permissionArray
@@ -42,17 +43,17 @@ object PermissionHelper {
             return this
         }
 
-        fun failed(failedBlock: (permissionList: List<String>, failedPermissionStr: String) -> Unit): Builder {
+        fun failed(failedBlock: PermissionFailed): Builder {
             this.failedBlock = failedBlock
             return this
         }
 
-        fun alwaysFailed(alwaysFailedBlock: (permissionList: List<String>, failedPermissionStr: String) -> Unit): Builder {
+        fun alwaysFailed(alwaysFailedBlock: PermissionFailed): Builder {
             this.alwaysFailedBlock = alwaysFailedBlock
             return this
         }
 
-        fun tryAgain(tryAgainBlock: (permissionList: List<String>, failedPermissionStr: String, executor: RequestExecutor) -> Unit): Builder {
+        fun tryAgain(tryAgainBlock: PermissionRetry): Builder {
             this.tryAgainBlock = tryAgainBlock
             return this
         }

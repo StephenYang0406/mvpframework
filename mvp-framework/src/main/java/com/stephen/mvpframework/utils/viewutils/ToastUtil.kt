@@ -8,16 +8,18 @@ import com.stephen.mvpframework.helper.WarningHelper
 import com.stephen.mvpframework.utils.ScreenUtil
 
 /**
+ * 吐司工具类
  * Created by Stephen on 2018/11/15.
  * StephenYoung0406@hotmail.com
  * <(￣ c￣)y▂ξ
  */
+
 object ToastUtil {
 
     //从上方弹出SnackBar
     fun showTopSnackBar(text: String) {
         SnackbarManager.show(
-                Snackbar.with(ContextHandler.getApplication())
+                Snackbar.with(ContextHandler.currentActivity())
                         .text(text)
                         .position(Snackbar.SnackbarPosition.TOP)
                         .margin(ScreenUtil.dp2px(0), ScreenUtil.dp2px(25))
@@ -27,7 +29,7 @@ object ToastUtil {
     //从下方弹出SnackBar
     fun showBottomSnackBar(text: String) {
         SnackbarManager.show(
-                Snackbar.with(ContextHandler.getApplication())
+                Snackbar.with(ContextHandler.currentActivity())
                         .text(text)
                         .position(Snackbar.SnackbarPosition.BOTTOM)
                         .margin(ScreenUtil.dp2px(0), ScreenUtil.dp2px(25))
